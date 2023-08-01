@@ -10,6 +10,8 @@ app.use(express.json())
 app.use(logger)
 app.use(cors())
 
+app.use(express.static('dist'))
+
 app.get('/api/agenda', (req, res) => {
   Persona.find().then((personas) => res.json(personas))
 })
