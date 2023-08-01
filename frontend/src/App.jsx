@@ -41,24 +41,38 @@ function App() {
       }, 3000)
       return
     }
-    createData(contacto).then((res) => {
-      setDatos(datos.concat(res))
-      setMensaje('contacto creado')
-      setTimeout(() => {
-        setMensaje('')
-      }, 3000)
-    })
+    createData(contacto)
+      .then((res) => {
+        setDatos(datos.concat(res))
+        setMensaje('contacto creado')
+        setTimeout(() => {
+          setMensaje('')
+        }, 3000)
+      })
+      .catch((err) => {
+        setError(err.response.data.error)
+        setTimeout(() => {
+          setError('')
+        }, 3000)
+      })
   }
 
   const updateContact = (contacto) => {
-    updateData(contacto.id, contacto).then((res) => {
-      const nuevosDatos = datos.map((d) => (d.id === res.id ? res : d))
-      setDatos(nuevosDatos)
-      setMensaje('contacto actualizado')
-      setTimeout(() => {
-        setMensaje('')
-      }, 3000)
-    })
+    updateData(contacto.id, contacto)
+      .then((res) => {
+        const nuevosDatos = datos.map((d) => (d.id === res.id ? res : d))
+        setDatos(nuevosDatos)
+        setMensaje('contacto actualizado')
+        setTimeout(() => {
+          setMensaje('')
+        }, 3000)
+      })
+      .catch((err) => {
+        setError(err.response.data.error)
+        setTimeout(() => {
+          setError('')
+        }, 3000)
+      })
   }
 
   useEffect(() => {
