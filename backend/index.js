@@ -30,8 +30,8 @@ app.post('/api/agenda', (req, res) => {
 app.put('/api/agenda/:id', (req, res) => {
   const id = req.params.id
   const nuevaPersona = req.body
-  Persona.updateOne({ _id: id }, nuevaPersona).then((respuesta) =>
-    res.json(respuesta)
+  Persona.findByIdAndUpdate(id, nuevaPersona, { returnDocument: 'after' }).then(
+    (respuesta) => res.json(respuesta)
   )
 })
 
