@@ -4,7 +4,6 @@ export function CrearContacto({ createFunc }) {
     const nuevoContacto = {
       name: e.target.nombre.value,
       number: e.target.numero.value,
-      id: Math.trunc(Math.random() * 1000),
     }
     createFunc(nuevoContacto)
     e.target.numero.value = ''
