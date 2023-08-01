@@ -20,21 +20,27 @@ app.get('/api/agenda/:id', (req, res) => {
   Persona.findById(req.params.id).then((persona) => res.json(persona))
 })
 
-app.post('/api/agenda', (req, res) => {
+app.post('/api/agenda', (req, res, next) => {
   const body = req.body
   const nuevaPersona = new Persona({
     name: body.name,
     number: body.number,
   })
-  nuevaPersona.save().then(() => res.json(nuevaPersona))
+  nuevaPersona
+    .save()
+    .then(() => res.json(nuevaPersona))
+    .catch((err) => next(err))
 })
 
-app.put('/api/agenda/:id', (req, res) => {
+app.put('/api/agenda/:id', (req, res, next) => {
   const id = req.params.id
   const nuevaPersona = req.body
-  Persona.findByIdAndUpdate(id, nuevaPersona, { returnDocument: 'after' }).then(
-    (respuesta) => res.json(respuesta)
-  )
+  Persona.findByIdAndUpdate(id, nuevaPersona, {
+    returnDocument: 'after',
+    runValidators: true,
+  })
+    .then((respuesta) => res.json(respuesta))
+    .catch((err) => next(err))
 })
 
 app.delete('/api/agenda/:id', (req, res) => {
@@ -42,6 +48,7 @@ app.delete('/api/agenda/:id', (req, res) => {
 })
 
 app.use(notFound)
+app.use(errorHandler)
 app.listen(PORT)
 
 function logger(req, res, next) {
@@ -54,4 +61,10 @@ function logger(req, res, next) {
 function notFound(req, res, next) {
   console.log('pagina no encontrada')
   res.status(404).end()
+}
+
+function errorHandler(error, req, res, next) {
+  console.log(error)
+  res.status(400).json({ error: error.message })
+  next(error)
 }
