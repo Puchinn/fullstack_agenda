@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:ui": "cd ../frontend && npm run build && @Powershell Copy-Item dist -Recurse -Force ../backend"
   },
   "dependencies": {
     "cors": "^2.8.5",
