@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "cd ../frontend && npm run build && @Powershell Copy-Item dist -Recurse -Force ../backend"
+    "build:ui": "cd ../frontend && npm run build && @Powershell Copy-Item dist -Recurse -Force ../backend",
+    "lint": "eslint index.js models.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,6 +17,7 @@
     "mongoose-unique-validator": "^4.0.0"
   },
   "devDependencies": {
+    "eslint": "^8.46.0",
     "nodemon": "^3.0.1"
   },
   "engines": {
